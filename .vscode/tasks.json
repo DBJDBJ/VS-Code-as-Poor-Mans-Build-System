@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"options": {
+		"cwd": "${workspaceFolder}",
+		"env": {
+			/* seems not to work in the tasks bellow */
+			"cpp_files" : "${workspaceFolder}\\*.cpp", 
+			"c_files"   : "${workspaceFolder}\\*.c"
+		}
+	},
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "clang_x64_debug",
+			"command": "\"${config:dbj.clangx64}\" ${config:dbj.release_no_cppx}",
+			"args": [
+				"/Fe${workspaceFolder}\\build\\dirent_clang_debug.exe",
+				"${config:dbj.source_files_cpp}",
+				"${config:dbj.source_files_c}"
+			],
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "no c++ exceptions",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true
+			}
+		}
+	]
+}

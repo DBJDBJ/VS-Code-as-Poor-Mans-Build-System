@@ -1,0 +1,9 @@
+{
+    "dbj" : {
+    "clangx64" : "D:\\PROD\\programs\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe",
+        /* clang-cl can not take the /kernel switch */
+    "release_no_cppx"  : "/MT /d2FH4 /GR- /O2 /DNDEBUG /D_CRT_SECURE_NO_WARNINGS /nologo /W2 /std:c++17 /permissive- /DWINVER=0x0A00 /D_WIN32_WINNT=0x0A00",
+    "source_files_cpp" : "${workspaceFolder}\\*.cpp", 
+    "source_files_c"   : "${workspaceFolder}\\*.c"
+    }
+}
