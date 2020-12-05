@@ -41,14 +41,14 @@ typedef std::vector<std::string> vSTG;
 // }
 
 
-void fix_directory( std::string &dir )
+static void fix_directory( std::string &dir )
 {
     size_t pos = dir.rfind(PATH_SEP);
     if (pos != dir.size())
         dir += PATH_SEP;
 }
 
-int enumerate_dir(const char *dir, int dep)
+static int enumerate_dir(const char *dir, int dep)
 {
     int count = 0;
     DIR *dp = opendir(dir);
@@ -69,7 +69,7 @@ int enumerate_dir(const char *dir, int dep)
     uint64_t dirs  = 0;
     uint64_t bytes = 0;
 
-    while ((pe = readdir(dp)) != 0) {
+    while ((pe = readdir(dp)) != NULL ) {
         if (strcmp(pe->d_name,".") == 0)
             continue;
         if (strcmp(pe->d_name,"..") == 0)

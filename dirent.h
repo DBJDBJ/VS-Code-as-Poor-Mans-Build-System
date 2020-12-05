@@ -35,7 +35,7 @@ struct dirent
 };
 
 #ifdef _WIN64
-#define INTPTR __int64
+#define INTPTR long long
 #else
 #define INTPTR long
 #endif

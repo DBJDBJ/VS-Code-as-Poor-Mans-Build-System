@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 static const char *module = "test-dir";
-static const char *usr_input = 0;
+static const char *usr_input = NULL ;
 static bool recursive = false;
 static bool utc_option = false;
 
@@ -29,7 +29,7 @@ static uint64_t total_bytes = 0;
 static char szFullPath[MAX_PATH];
 
 static struct stat buf;
-int is_file_or_directory32 ( const char * path )
+inline int is_file_or_directory32 ( const char * path )
 {
     if (!path)
         return DT_NONE;
@@ -55,11 +55,12 @@ int is_file_or_directory32 ( const char * path )
     }
 	return DT_NONE;
 }
-uint64_t get_last_file_size() { return buf.st_size; }
+
+inline uint64_t get_last_file_size() { return buf.st_size; }
 
 // 19/10/2014  19:25    <DIR>          Win32
 // 19/10/2014  19:34            22,579 ZERO_CHECK.vcxproj
-void output_stat()
+inline void output_stat()
 {
    struct tm * ptm;
    ptm = utc_option ? gmtime(&buf.st_mtime) : localtime(&buf.st_mtime);
@@ -73,7 +74,7 @@ void output_stat()
     }
 }
 
-void output_stat2()
+inline void output_stat2()
 {
     char timebuf[26];
     errno_t err = ctime_s(timebuf, 26, &buf.st_mtime);
@@ -96,9 +97,10 @@ void output_stat2()
     }
 }
 
-
-void give_help( const char *name )
+__attribute__((noreturn))
+inline void give_help( const char *name )
 {
+    (void)name ;
     printf("%s: usage: [options] usr_input\n", module);
     printf("Options:\n");
     printf(" --help  (-h or -?) = This help and exit(2)\n");
@@ -111,8 +113,7 @@ void give_help( const char *name )
     exit(EXIT_SUCCESS);
 }
 
-int parse_args( int argc, char **argv )
-
+inline int parse_args( int argc, char **argv )
 {
     int i,i2,c;
     char *arg, *sarg;
