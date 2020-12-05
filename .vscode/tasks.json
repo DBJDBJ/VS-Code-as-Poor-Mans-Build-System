@@ -12,6 +12,20 @@
 		{
 
 			"type": "shell",
+			"label": "drive the driver",
+			"command": ".vscode\\driver.cmd \"${config:dbj.clang_x64}\" \"${config:dbj.clang_ignored_warnings}\" ${config:dbj.source_files_c} ${config:dbj.source_files_cpp}",
+			"detail": "testing",
+			"group": {
+				/* this is ok to be added to every task, this also shows normal list of tasks
+				   with no repetitions after CTRL+SHIFT+B
+				*/
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+
+			"type": "shell",
 			"label": "test_task",
 			/* second echo is blank result `[]` */
 			"command": "echo config:cdbj.clang_x64 = [${config:dbj.clang_x64}] & echo env:clang = [${env:clang}]",
