@@ -1,5 +1,11 @@
 #include "dirent.h"
 
+#ifdef __clang__
+#define DBJ_NORETURN __attribute__((noreturn))
+#else
+#define DBJ_NORETURN [[noreturn]]
+#endif
+
 
 #ifdef _MSC_VER
 #define M_IS_DIR _S_IFDIR
@@ -97,7 +103,7 @@ inline void output_stat2()
     }
 }
 
-__attribute__((noreturn))
+DBJ_NORETURN
 inline void give_help( const char *name )
 {
     (void)name ;

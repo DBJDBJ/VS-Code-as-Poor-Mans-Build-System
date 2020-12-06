@@ -1,16 +1,31 @@
 {
-    "dbj" : {
+    /* (C) 2020 by dbj@dbj.org  https://dbj.org/license_dbj */
+    "dbj": {
+        "clang_x64_nadalap": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe",
+        "clang_x64_ws01": "D:\\PROD\\programs\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe",
+        /*
+    clang-cl driver supports a lot of MSVC compiler options. 
+    Detailed documentation is here: https://clang.llvm.org/docs/UsersManual.html#clang-cl
+    */
+        "clang_ignored_warnings": "-Wno-sign-conversion -Wno-zero-as-null-pointer-constant -Wno-c++98-compat-pedantic -Wno-format-non-iso -Wno-unused-macros -Wno-reserved-id-macro  -Wno-nonportable-system-include-path",
+        /*
+    NOTES: 
 
+    clang-cl: warning: argument unused during compilation: '/d2FH4' [-Wunused-command-line-argument]
+    /d2FH4 is inbuilt in cl.exe and clang-cl.exe  
 
-    "clang_x64_nadalap" : "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe" ,
-    
-    "clang_x64" : "D:\\PROD\\programs\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe",
-
-    "clang_ignored_warnings" : "-Wno-sign-conversion -Wno-zero-as-null-pointer-constant -Wno-c++98-compat-pedantic -Wno-format-non-iso -Wno-unused-macros -Wno-reserved-id-macro  -Wno-nonportable-system-include-path",
-
+    NOTE: you must create \intermediate folder manually before compiling
+          also not it is inside double quotes in case there are spaces in the paths
+    */
+        "intermediate_folder": "/Fo${workspaceFolder}\\intermediate\\",
+        "common_compiler_arguments": "/D_CRT_SECURE_NO_WARNINGS /nologo /std:c++17 /permissive- /DWINVER=0x0A00 /D_WIN32_WINNT=0x0A00 /D_CRT_SECURE_NO_WARNINGS",
         /* clang-cl can not take the /kernel switch */
-    "release_no_cppx"  : "/MT /d2FH4 /GR- /O2 /DNDEBUG /D_CRT_SECURE_NO_WARNINGS /nologo /W2 /std:c++17 /permissive- /DWINVER=0x0A00 /D_WIN32_WINNT=0x0A00 /D_CRT_SECURE_NO_WARNINGS",
-    "source_files_cpp" : "${workspaceFolder}\\*.cpp", 
-    "source_files_c"   : "${workspaceFolder}\\*.c"
+        "release_no_cppx": "/MT /GR- /D_HAS_EXCEPTIONS=0 /O2 /DNDEBUG ",
+        /* with cpp exception */
+        "release_cppx": "/MT /GR /EHsc /D_HAS_EXCEPTIONS=1 /O2 /DNDEBUG ",
+        "source_files_cpp": "${workspaceFolder}\\*.cpp",
+        "source_files_c": "${workspaceFolder}\\*.c",
+        /* clang-cl.exe does not understand this*/
+        "linker_arguments": "/link /SUBSYSTEM:CONSOLE"
     }
 }
