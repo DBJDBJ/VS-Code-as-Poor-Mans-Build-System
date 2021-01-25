@@ -1,19 +1,21 @@
 
 # VS Code as Poor Mans Build System (PMBS)
 
+Hint: look into the .vscode
+
 &copy; 2020-2021 by dbj@dbj.org, https://dbj.org/license_dbj
 
 ## Why would anybody do this?
 
-You want to use same code to build (a lot) of different targets. But you have decided CMake is an overkill. Just like I was.
+You want to use same code to build (a lot) of different targets. But you have decided CMake is an overkill. Just like one day, I was.
 
-Thus this is the outcome. Usig VSCode and one windows script cmd file for non trivial multi target building.
+Thus this is the outcome. Usig VSCode and one windows script cmd file for (non)trivial multi target building. No CMake.
 
-Largely, time was spent in finding workarounds in the labyrinth of VSCode bugs, in the area of using it's own [json config files](https://github.com/microsoft/vscode/issues/47985). Together with VSCode C++ extension. 
+Largely, a lot of time was spent in finding workarounds in the labyrinth of VSCode bugs (gasp!), all on the subject of using it's own [json config files](https://github.com/microsoft/vscode/issues/47985). Together with VSCode C++ extension, and it own set of subtle issues. 
 
-And yes, please never forget this: developing bat scripts is lake balancing on the very high rope, with no safety net bellow. Just don't do it. So why was I using windows scripting? Because it is inbuilt into the OS. 
+And yes, please never forget this: developing Windows batch scripts is lake balancing on the very high rope, with no safety net bellow. Just don't do it. So why was I using windows scripting? Because it is inbuilt into the OS. And now, you don't have to.
 
-It would be much easier to use WSH. WSH is also inbuilt in Windows, but it seems, it is in this peculiar state of "support or no support". And nobody knows for how long.
+It would be much easier to use [WSH](https://en.wikipedia.org/wiki/Windows_Script_Host). It is also inbuilt in Windows, but it seems, it is in this peculiar state of "support or no support". And nobody knows for how long.
 
 We are using clang-cl part of the VStudio 2019. Obviously your clang-cl.exe compilers locations might be different.
 
@@ -43,7 +45,7 @@ VSCode is much faster and lighter way to quickly build single file C/C++ solutio
 
 Jut open it from the Visual Studio cmd prompt, open your folder and that single c or cpp and hit F5. And that's it. Provided you have installed and configured C++ VS Code extension before that. That should be enough.
 
-> But seldom it is enough. 
+> But seldom, that is enough
 
 And this is a solution for that situation before you decide to go back to the safety of Visual Studio. But still you need some "slightly beyond trivial" command line building. 
 
