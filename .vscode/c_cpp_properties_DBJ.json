@@ -1,0 +1,57 @@
+{
+    "version": 4,
+    "env": {
+        /* on this machine */
+        "clang-cl-x64": "D:\\PROD\\programs\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe"
+    },
+    "configurations": [
+        {
+            "name": "Clang|x64|Debug",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerArgs": [
+                "/MTd ",
+                "/FO${workspaceFolder}\\intermediate"
+            ],
+            "windowsSdkVersion": "10.0.18362.0",
+            "compilerPath": "${clang-cl-x64}",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "${default}"
+        },
+        {
+            "name": "Clang|Release|no c++ exceptions",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "NDEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "_HAS_EXCEPTIONS=0"
+            ],
+            "windowsSdkVersion": "10.0.18362.0",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64",
+            /* no can do? "compilerPath": "${clang-cl-x64}", */
+            "compilerPath": "D:\\PROD\\programs\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe",
+            "compilerArgs": [
+                "/MT ",
+                "/FO${workspaceFolder}\\intermediate"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "${workspaceFolder}/**"
+                ]
+            }
+        }
+    ]
+}

@@ -14,22 +14,24 @@ where we remove d.quotes
 or where we add d.quotes
 
 :BEGIN
-REM GOTO:COMPILE  & REM when ready
+@REM GOTO:COMPILE  & REM when ready
 
-@ECHO 1 = [%1]    & REM compiler full path in double quotes
-@ECHO 2 = [%~2]   & REM argument sets is passed as a single string literal
-@ECHO 3 = [%~3]   & REM files to be compiled also passed as a single string literal
-@ECHO 4 = [%4]    & REM /o "full path with possible spaces\\exename.exe"
-@ECHO 5 = [%~5]   & REM /link and the rest
-@ECHO 6 = [%6]
-@ECHO 7 = [%7]
-@ECHO 8 = [%8]
+@ECHO Arguments to: [%0]
+@ECHO 1 = Compiler  [%1]    & REM compiler full path in double quotes
+@ECHO 2 = Arguments [%~2]   & REM argument sets is passed as a single string literal
+@ECHO 3 = Files     [%~3]   & REM files to be compiled also passed as a single string literal
+@ECHO 4 = Exe name  [%4]    & REM /o "full path with possible spaces\\exename.exe"
+@ECHO 5 = Linker    [%~5]   & REM /link and the rest
+@REM @ECHO 6 = [%6]
+@REM @ECHO 7 = [%7]
+@REM @ECHO 8 = [%8]
+@ECHO.
 
-:: GOTO:eof
+:: GOTO:eof & REM to avoid compilation step
 
 :COMPILE
 :: be sure to match the quotes expansions or not expansions 
 :: as you have researched them above
-@echo on
+@echo off
 %1 %~2 %~3 %4 %~5
 

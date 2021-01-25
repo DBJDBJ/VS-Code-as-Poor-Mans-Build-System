@@ -3,7 +3,9 @@
 	"version": "2.0.0",
 	/* options can be in any legal place ... 
 	   using env:varname will be always blank
-	   this we use setting.json, as bellow
+	   this is a bug
+	   thus we use setting.json, as in ${config:dbj.clang_x64_ws01}
+	   where dbj is our grouping
 	*/
 	"options": {
 		"env": {
@@ -12,51 +14,51 @@
 	},
 	"tasks": [
 		{
-			/* 'cpplib' task type not used */
+			/* 'cpplib' task type not used 
+			    we basically use a batch file to wich we pass 5 arguments
+			*/
 			"type": "shell",
 			"label": "bin/dirent_clang_release_nocppx.exe",
-			/* it seems ${workspaceFolder} is implied */
+			/* ${workspaceFolder} is implied, code is started from that folder */
 			"command": ".vscode\\driver.cmd",
 			"args": [
 				/*
-				in this scenario first driver.cmd argument is compiler full path
+				ARG 1: the compiler full path
 				*/
 				"${config:dbj.clang_x64_ws01}",
 				/* 
-				arguments sets can be combined into single argument for the driver 
-				this is in order to have smaller number of args for the driver.cmd
-
-				in this scenario we have decided to mix them all into one argument
-				thsu we always know the second driver.cmd argument is compiler switches
+				ARG 2: compiler arguments added together
+				thus we always know the second driver.cmd argument is compiler switches
 				*/
-				"${config:dbj.clang_ignored_warnings} ${config:dbj.common_compiler_arguments} ${config:dbj.release_no_cppx}",
+				"${config:dbj.intermediate_folder} ${config:dbj.common_compiler_arguments} ${config:dbj.release_no_cppx} ${config:dbj.clang_ignored_warnings} ",
 				/*
-				third argument is compilation units aka c and cpp files sets
-				windows note: double quotes are mandatory if they  contain spaces in paths or file names
-
+				ARG 3: compilation units aka c and cpp files sets
+				windows users note: double quotes are mandatory if they  contain spaces in paths or file names
 				you can not do this here:
 
 				"\"${config:dbj.source_files_c}\" \"${config:dbj.source_files_cpp}\"",
 
 				that will render as two separate arguments as far as driver.cmd is concerned
 
-				remember: using driver.cmd you can just display them while composing the arguments
-				not actually using them
+				remember: while composing this using driver.cmd you can just display them 
+				not actually compiling and using them arguments
 
 				we can do as bellow to make driver.cmd take this as one argument
-				not nice, but works, one string literal is one argument
-				"""A" "B""" -- becomes %3 inside drive.cmd --> ""A" "B""
+				not nice, but works, one string literal is one argument, thus
+				we make them into one:
 
-				NOTE: this hackery makes it possible to have always 4 
-				arguments for the driver.cmd
+				"""A" "B""" -- becomes one arg inside drive.cmd --> ""A" "B""
+
+				NOTE: this hackery makes it possible to have constant no of arguments for the driver.cmd
 				*/
 				"\"\"${config:dbj.source_files_c}\" \"${config:dbj.source_files_cpp}\"\"",
 				/*
-				fourth arguments is full path of the resulting binary 
+				ARG 4: full path of the resulting binary
+				notice we are fully describing the build mix in the exe name
 				*/
-				"/o${workspaceFolder}\\bin\\dirent_clang_release_nocppx.exe",
+				"/Febin\\dirent_clang_release_nocppx.exe",
 				/*
-				fifth argument is for the /linker, mandatory poistioned as the rightmost aka last
+				ARG 5: is for the /linker, mandatory positioned as the rightmost aka last
 				*/
 				"${config:dbj.linker_arguments}"
 			],
@@ -68,10 +70,12 @@
 			"problemMatcher": []
 		},
 		/* 
-		the purpose of all this juggling is to build different targets 
+		one valid purpose of all this juggling is to build different targets 
 		from the same code.
 
-		Second target: we use cl.exe and we use C++exceptions
+		Example Second target: we use cl.exe and we use C++exceptions
+
+		notice the reuse of things from the setttings.json
 		*/
 		{
 			/* 'cpplib' task type not used */
@@ -80,15 +84,15 @@
 			/* it seems ${workspaceFolder} is implied */
 			"command": ".vscode\\driver.cmd",
 			"args": [
-				/* this compiler is on the path */
+				/* ARG 1: the compiler*/
 				"cl.exe",
-				/* arguments sets combined into one single argument for the driver  */
-				"/W1 /std:c++17 ${config:dbj.intermediate_folder} ${config:dbj.common_compiler_arguments} ${config:dbj.release_cppx}",
-				/* third argument is compilation units aka c and cpp files sets	*/
+				/* ARG 2: arguments sets combined into one single argument */
+				"${config:dbj.intermediate_folder} ${config:dbj.common_compiler_arguments} ${config:dbj.release_cppx}",
+				/* ARG 3: compilation units aka c and cpp files sets	*/
 				"\"\"${config:dbj.source_files_c}\" \"${config:dbj.source_files_cpp}\"\"",
-				/*	fourth arguments is full path of the resulting binary  */
+				/* ARG 4: full path of the resulting binary  */
 				"/Fe${workspaceFolder}\\bin\\dirent_cl_release_nocppx.exe",
-				/* fifth argument is for the /linker and the rest of its args, if any */
+				/* ARG 5: for the /linker and the rest of its args, if any */
 				"${config:dbj.linker_arguments}"
 			],
 			"detail": "using the driver.cmd",
